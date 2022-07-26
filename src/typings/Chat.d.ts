@@ -1,8 +1,6 @@
 export interface ChatUser {
   name: string
   img?: string
-  backgroundColor: string
-  color: string
   side: 'left' | 'right'
 }
 

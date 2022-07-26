@@ -1,3 +1,4 @@
+import { STR_THANK_YOU } from '../constants/strings'
 import { AnswerClickCb, ChatMessage, ChatUser } from '../typings/Chat'
 import { ChatBotData } from './ChatBotData'
 import { ChatBotStep } from './ChatBotStep'
@@ -15,15 +16,19 @@ export class ChatBot {
 
   private onAnswerClickCb: AnswerClickCb
 
+  private onFinishedCb: () => void
+
   constructor(
     flowData: ChatBotData,
     humanUser: ChatUser,
     botUser: ChatUser,
-    onAnswerClickCb: AnswerClickCb
+    onAnswerClickCb: AnswerClickCb,
+    onFinishedCb: () => void
   ) {
     this.humanUser = humanUser
     this.botUser = botUser
     this.onAnswerClickCb = onAnswerClickCb
+    this.onFinishedCb = onFinishedCb
     try {
       this.steps = flowData.map(
         (singleStepData) => new ChatBotStep(singleStepData)
@@ -32,14 +37,11 @@ export class ChatBot {
         this.currentStep = this.steps[0]
       }
     } catch (e) {
-      this.handleError(e as Error)
+      console.error(e)
+      throw new Error('Error Creating Chatbot')
     }
 
     this.addNewBotMessage()
-  }
-
-  private handleError(error: Error) {
-    console.error('TODO: HANDLE ERROR', error)
   }
 
   private findStep(stepIdToBeFound: number): ChatBotStep {
@@ -90,7 +92,14 @@ export class ChatBot {
 
   private addNewBotMessage() {
     if (!this.currentStep) {
-      throw new Error('Could not store message. No current step available')
+      this.messages.push({
+        user: this.botUser,
+        id: this.messages.length,
+        showButtons: false,
+        text: STR_THANK_YOU,
+        buttons: [],
+      })
+      return
     }
 
     this.messages.push({
@@ -105,6 +114,10 @@ export class ChatBot {
     })
   }
 
+  private notifyFinished() {
+    this.onFinishedCb()
+  }
+
   public answer(answerId: number) {
     if (!this.currentStep) {
       throw new Error('Cannot answer if no step available')
@@ -114,9 +127,11 @@ export class ChatBot {
     const nextStepId = this.currentStep.answer(answerId)
     if (nextStepId !== false) {
       this.currentStep = this.findStep(nextStepId)
-
-      this.addNewBotMessage()
+    } else {
+      this.currentStep = false
+      this.notifyFinished()
     }
+    this.addNewBotMessage()
   }
 
   public getMessages() {

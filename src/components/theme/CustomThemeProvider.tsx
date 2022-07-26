@@ -1,5 +1,5 @@
 import { createTheme, ThemeProvider, CssBaseline } from '@mui/material'
-import { green, orange, purple, yellow } from '@mui/material/colors'
+import { yellow } from '@mui/material/colors'
 
 interface Props {
   children: React.ReactNode
@@ -7,10 +7,8 @@ interface Props {
 
 export const chatbotTheme = createTheme({
   palette: {
-    // mode: 'dark',
     primary: {
       main: '#2167ae',
-      // dark: '#23366f',
     },
     secondary: yellow,
   },

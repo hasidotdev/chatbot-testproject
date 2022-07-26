@@ -1,5 +1,4 @@
 import { Stack } from '@mui/material'
-import { green, orange } from '@mui/material/colors'
 import { useCallback, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { ChatBot } from '../../logic/ChatBot'
@@ -15,16 +14,12 @@ const Chat = () => {
   const [messages, setMessages] = useState<ChatMessage[]>([])
 
   const human: ChatUser = {
-    backgroundColor: orange[200],
-    color: orange[900],
     name: 'User 1',
     side: 'left',
     img: 'https://avatars.githubusercontent.com/u/7084114?v=4',
   }
 
   const bot: ChatUser = {
-    backgroundColor: green[200],
-    color: green[900],
     name: 'User 2',
     side: 'right',
   }
@@ -33,9 +28,19 @@ const Chat = () => {
     setMessages([...newMessages])
   }, [])
 
+  const onFinished = useCallback(() => {
+    console.log('Finished')
+  }, [])
+
   useEffect(() => {
     if (!chatBot && chatBotData) {
-      const botCreated = new ChatBot(chatBotData, human, bot, handleAnswer)
+      const botCreated = new ChatBot(
+        chatBotData,
+        human,
+        bot,
+        handleAnswer,
+        onFinished
+      )
       setChatBot(botCreated)
       setMessages(botCreated.getMessages())
     }
