@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { REQUEST_CHATBOT_DATA } from '../../constants/actions'
-import { ChatBotData } from '../../typings/ChatBotData'
+import { ChatBotData } from '../../logic/ChatBotData'
 
 import { fetchChatbotData } from '../../utils/api'
 

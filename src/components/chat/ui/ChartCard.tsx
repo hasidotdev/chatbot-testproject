@@ -3,7 +3,6 @@ import {
   Button,
   Card,
   CardContent,
-  makeStyles,
   Stack,
   Typography,
 } from '@mui/material'
@@ -13,10 +12,9 @@ import { ChatUser, ChatMessage } from '../../../typings/Chat'
 interface Props {
   user: ChatUser
   content: ChatMessage
-  showButtons: boolean
 }
 
-const ChatCard = ({ user, content, showButtons }: Props) => {
+const ChatCard = ({ user, content }: Props) => {
   const leftStyle = {
     left: 0,
     transform: 'translate(-33%, -33%)',
@@ -39,10 +37,11 @@ const ChatCard = ({ user, content, showButtons }: Props) => {
             <Typography color="text.secondary" gutterBottom>
               {content.text}
             </Typography>
-            {(content.buttons.length && showButtons && (
+            {(content.buttons.length && content.showButtons && (
               <Stack direction="row" spacing={2} mt={2}>
-                {content.buttons.map((button) => (
+                {content.buttons.map((button, key) => (
                   <Button
+                    key={key}
                     variant="contained"
                     size="small"
                     onClick={button.onClick}

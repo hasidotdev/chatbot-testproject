@@ -5,7 +5,7 @@ export interface ChatBotValueOption {
   value: string | number | boolean
   text: string
 }
-export interface ChatBotStep {
+export interface ChatBotStepData {
   id: number
   name: string
   text: string
@@ -14,4 +14,4 @@ export interface ChatBotStep {
   valueOptions: ChatBotValueOption[]
 }
 
-export type ChatBotData = ChatBotStep[]
+export type ChatBotData = ChatBotStepData[]

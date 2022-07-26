@@ -11,6 +11,9 @@ export interface ChatMessageButton {
   onClick: () => void
 }
 export interface ChatMessage {
+  userId: number
+  id: number
   text: string
   buttons: ChatMessageButton[]
+  showButtons: boolean
 }
