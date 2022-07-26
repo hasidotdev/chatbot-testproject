@@ -1,0 +1,53 @@
+openapi: 3.0.0
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/L8475/task/1.0.1
+info:
+  description: Chatbot server interface to handle a conversation
+  version: 1.0.1
+  title: Chatbot API
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+paths:
+  /conversation:
+    put:
+      summary: saves the whole conversation
+      operationId: postConversation
+      responses:
+        '204':
+          description: conversation successfully saved
+        '400':
+          description: invalid conversation posted
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/FlowValue'
+components:
+  schemas:
+    FlowValue:
+      type: object
+      required:
+        - name
+        - value
+      properties:
+        name:
+          type: string
+          example: liability
+        value:
+          $ref: '#/components/schemas/FlowValueType'
+    FlowValueType:
+      oneOf:
+        - type: string
+          nullable: true
+          example: full
+        - type: number
+          nullable: true
+          example: 1
+        - type: boolean
+          nullable: true
+          example: false
