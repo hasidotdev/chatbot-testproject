@@ -1,7 +1,11 @@
 import { Typography } from '@mui/material'
 
 const Chat = () => {
-  return <Typography>Chat</Typography>
+  return (
+    <div>
+      <Typography>Chat</Typography>
+    </div>
+  )
 }
 
 export default Chat
