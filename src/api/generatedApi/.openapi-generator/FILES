@@ -1,8 +1,9 @@
+.gitignore
+.npmignore
 .openapi-generator-ignore
-apis/DefaultApi.ts
-apis/index.ts
+api.ts
+base.ts
+common.ts
+configuration.ts
+git_push.sh
 index.ts
-models/FlowValue.ts
-models/FlowValueType.ts
-models/index.ts
-runtime.ts

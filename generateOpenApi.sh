@@ -1,4 +1,4 @@
 docker run --rm -v "${PWD}/src/api:/local" openapitools/openapi-generator-cli generate \
     -i /local/chatbot.yaml \
-    -g typescript-fetch \
+    -g typescript-axios \
     -o /local/generatedApi

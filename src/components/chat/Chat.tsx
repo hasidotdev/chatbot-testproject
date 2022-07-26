@@ -1,9 +1,16 @@
 import { Stack } from '@mui/material'
 import { useCallback, useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  STR_RESULT_SEND_ERROR,
+  STR_RESULT_SEND_FINISHED,
+  STR_RESULT_SEND_PENDING,
+} from '../../constants/strings'
 import { ChatBot } from '../../logic/ChatBot'
-import { RootState } from '../../store'
+import { AppDispatch, RootState } from '../../store'
+import { actionPostApiData } from '../../store/reducers/app'
 import { ChatMessage, ChatUser } from '../../typings/Chat'
+import ChatApiStatus from './ChatApiStatus'
 import ChatCard from './ui/ChartCard'
 import ChatContainer from './ui/ChatContainer'
 
@@ -12,6 +19,9 @@ const Chat = () => {
   const [chatBot, setChatBot] = useState<ChatBot | false>(false)
 
   const [messages, setMessages] = useState<ChatMessage[]>([])
+
+  const { resultPostStatus } = useSelector((state: RootState) => state.app)
+  const [showResultApiStatus, setShowResultApiStatus] = useState(false)
 
   const human: ChatUser = {
     name: 'User 1',
@@ -28,9 +38,12 @@ const Chat = () => {
     setMessages([...newMessages])
   }, [])
 
+  const dispatch = useDispatch<AppDispatch>()
   const onFinished = useCallback(() => {
     console.log('Finished')
-  }, [])
+    setShowResultApiStatus(true)
+    dispatch(actionPostApiData())
+  }, [dispatch])
 
   useEffect(() => {
     if (!chatBot && chatBotData) {
@@ -49,6 +62,16 @@ const Chat = () => {
 
   return (
     <div>
+      <ChatApiStatus
+        show={showResultApiStatus}
+        onClose={() => setShowResultApiStatus(false)}
+        status={resultPostStatus}
+        text={{
+          pending: STR_RESULT_SEND_PENDING,
+          success: STR_RESULT_SEND_FINISHED,
+          error: STR_RESULT_SEND_ERROR,
+        }}
+      />
       <ChatContainer title="Chat">
         <Stack spacing={4}>
           {messages.map((msg, msgKey) => (

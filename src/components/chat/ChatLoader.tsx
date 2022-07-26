@@ -1,9 +1,14 @@
-import { Alert, Snackbar } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import {
+  STR_CHAT_LOADED,
+  STR_ERROR_LOADING_CHAT,
+  STR_LOADING_CHAT,
+} from '../../constants/strings'
 import { AppDispatch, RootState } from '../../store'
 import { actionFetchChatBotData } from '../../store/reducers/app'
 import Chat from './Chat'
+import ChatApiStatus from './ChatApiStatus'
 
 const ChatLoader = () => {
   const dispatch = useDispatch<AppDispatch>()
@@ -21,37 +26,16 @@ const ChatLoader = () => {
 
   return (
     <>
-      <Snackbar
-        open={
-          (showSnackbars && chatBotFetchStatus === 'pending') ||
-          chatBotFetchStatus === false
-        }
+      <ChatApiStatus
+        show={showSnackbars}
         onClose={() => setShowSnackbars(false)}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-      >
-        <Alert variant="filled" severity="info">
-          Lade Chat
-        </Alert>
-      </Snackbar>
-      <Snackbar
-        open={showSnackbars && chatBotFetchStatus === 'success'}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-        autoHideDuration={2000}
-        onClose={() => setShowSnackbars(false)}
-      >
-        <Alert variant="filled" severity="success">
-          Chat geladen
-        </Alert>
-      </Snackbar>
-      <Snackbar
-        open={showSnackbars && chatBotFetchStatus === 'error'}
-        onClose={() => setShowSnackbars(false)}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-      >
-        <Alert variant="filled" severity="error">
-          Fehler beim Laden des Chats
-        </Alert>
-      </Snackbar>
+        status={chatBotFetchStatus}
+        text={{
+          pending: STR_LOADING_CHAT,
+          success: STR_CHAT_LOADED,
+          error: STR_ERROR_LOADING_CHAT,
+        }}
+      />
 
       {(chatBotData !== false && <Chat />) || null}
     </>
