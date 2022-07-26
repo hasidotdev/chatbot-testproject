@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { REQUEST_CHATBOT_DATA } from '../../constants/actions'
-import { ChatBotData } from '../../global'
+import { ChatBotData } from '../../typings/ChatBotData'
+
 import { fetchChatbotData } from '../../utils/api'
 
 type FetchStatus = false | 'pending' | 'success' | 'error'

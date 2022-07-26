@@ -1,17 +1,24 @@
 import { createTheme, ThemeProvider, CssBaseline } from '@mui/material'
+import { green, orange, purple, yellow } from '@mui/material/colors'
 
 interface Props {
   children: React.ReactNode
 }
-const CustomThemeProvider = ({ children }: Props) => {
-  const theme = createTheme({
-    palette: {
-      mode: 'dark',
-    },
-  })
 
+export const chatbotTheme = createTheme({
+  palette: {
+    // mode: 'dark',
+    primary: {
+      main: '#2167ae',
+      // dark: '#23366f',
+    },
+    secondary: yellow,
+  },
+})
+
+const CustomThemeProvider = ({ children }: Props) => {
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={chatbotTheme}>
       <>
         <CssBaseline />
         {children}

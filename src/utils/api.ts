@@ -1,5 +1,5 @@
 import { FLOW_URL } from '../constants/api'
-import { ChatBotData } from '../global'
+import { ChatBotData } from '../typings/ChatBotData'
 
 export const fetchChatbotData = async (): Promise<ChatBotData> => {
   const response = await fetch(FLOW_URL)
