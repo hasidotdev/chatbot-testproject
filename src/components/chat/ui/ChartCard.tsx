@@ -7,14 +7,14 @@ import {
   Typography,
 } from '@mui/material'
 import { Box } from '@mui/system'
-import { ChatUser, ChatMessage } from '../../../typings/Chat'
+import { useCallback } from 'react'
+import { ChatMessage } from '../../../typings/Chat'
 
 interface Props {
-  user: ChatUser
-  content: ChatMessage
+  message: ChatMessage
 }
 
-const ChatCard = ({ user, content }: Props) => {
+const ChatCard = ({ message }: Props) => {
   const leftStyle = {
     left: 0,
     transform: 'translate(-33%, -33%)',
@@ -25,26 +25,30 @@ const ChatCard = ({ user, content }: Props) => {
   }
   const avatarPositionStyle = {
     position: 'absolute',
-    ...(user.side === 'left' ? leftStyle : rightStyle),
+    ...(message.user.side === 'left' ? leftStyle : rightStyle),
   }
 
   return (
     <Box position="relative">
-      <Avatar sx={avatarPositionStyle} alt={user.name} src={user.img || ''} />
+      <Avatar
+        sx={avatarPositionStyle}
+        alt={message.user.name}
+        src={message.user.img || ''}
+      />
       <Card>
         <CardContent>
-          <Box mx={4} textAlign={user.side}>
+          <Box mx={4} textAlign={message.user.side}>
             <Typography color="text.secondary" gutterBottom>
-              {content.text}
+              {message.text}
             </Typography>
-            {(content.buttons.length && content.showButtons && (
+            {(message.buttons.length && message.showButtons && (
               <Stack direction="row" spacing={2} mt={2}>
-                {content.buttons.map((button, key) => (
+                {message.buttons.map((button, buttonKey) => (
                   <Button
-                    key={key}
+                    key={buttonKey}
                     variant="contained"
                     size="small"
-                    onClick={button.onClick}
+                    onClick={() => (button.onClick ? button.onClick() : false)}
                   >
                     {button.text}
                   </Button>
