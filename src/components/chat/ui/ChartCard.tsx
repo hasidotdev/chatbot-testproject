@@ -7,7 +7,6 @@ import {
   Typography,
 } from '@mui/material'
 import { Box } from '@mui/system'
-import { useCallback } from 'react'
 import { ChatMessage } from '../../../typings/Chat'
 
 interface Props {
