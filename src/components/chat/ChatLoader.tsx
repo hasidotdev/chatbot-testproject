@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
-  STR_CHAT_LOADED,
-  STR_ERROR_LOADING_CHAT,
-  STR_LOADING_CHAT,
+  STR_FETCH_FINISHED,
+  STR_FETCH_ERROR,
+  STR_FETCH_PENDING,
 } from '../../constants/strings'
 import { AppDispatch, RootState } from '../../store'
 import { actionFetchChatBotData } from '../../store/reducers/app'
@@ -31,9 +31,9 @@ const ChatLoader = () => {
         onClose={() => setShowSnackbars(false)}
         status={chatBotFetchStatus}
         text={{
-          pending: STR_LOADING_CHAT,
-          success: STR_CHAT_LOADED,
-          error: STR_ERROR_LOADING_CHAT,
+          pending: STR_FETCH_PENDING,
+          success: STR_FETCH_FINISHED,
+          error: STR_FETCH_ERROR,
         }}
       />
 
