@@ -1,6 +1,6 @@
 import { STR_THANK_YOU } from '../constants/strings'
-import { AnswerClickCb, ChatMessage, ChatUser } from '../typings/Chat'
-import { ChatBotData } from './ChatBotData'
+import { AnswerClickCb, ChatMessage, ChatUser, FinishCb } from '../typings/Chat'
+import { ChatBotAnswer, ChatBotData } from './ChatBotData'
 import { ChatBotStep } from './ChatBotStep'
 
 export class ChatBot {
@@ -14,16 +14,18 @@ export class ChatBot {
 
   private messages: ChatMessage[] = []
 
+  private answers: ChatBotAnswer[] = []
+
   private onAnswerClickCb: AnswerClickCb
 
-  private onFinishedCb: () => void
+  private onFinishedCb: FinishCb
 
   constructor(
     flowData: ChatBotData,
     humanUser: ChatUser,
     botUser: ChatUser,
     onAnswerClickCb: AnswerClickCb,
-    onFinishedCb: () => void
+    onFinishedCb: FinishCb
   ) {
     this.humanUser = humanUser
     this.botUser = botUser
@@ -115,7 +117,22 @@ export class ChatBot {
   }
 
   private notifyFinished() {
-    this.onFinishedCb()
+    this.onFinishedCb(this.getAnswers())
+  }
+
+  private storeAnswerData(answerId: number) {
+    if (!this.currentStep) {
+      throw new Error('Cannot read answer if no step available')
+    }
+    const answer: ChatBotAnswer = {
+      name: this.currentStep.name,
+      value: this.currentStep.getAnswerById(answerId).value,
+    }
+    this.answers.push(answer)
+  }
+
+  private getAnswers() {
+    return this.answers
   }
 
   public answer(answerId: number) {
@@ -123,6 +140,7 @@ export class ChatBot {
       throw new Error('Cannot answer if no step available')
     }
     this.addAnswerMessage(answerId)
+    this.storeAnswerData(answerId)
 
     const nextStepId = this.currentStep.answer(answerId)
     if (nextStepId !== false) {

@@ -4,7 +4,7 @@ import {
   REQUEST_CHATBOT_DATA,
   REQUEST_POST_RESULT,
 } from '../../constants/actions'
-import { ChatBotData } from '../../logic/ChatBotData'
+import { ChatBotAnswer, ChatBotData } from '../../logic/ChatBotData'
 
 interface State {
   chatBotData: ChatBotData | false
@@ -25,7 +25,7 @@ export const actionFetchChatBotData = createAsyncThunk(
 
 export const actionPostApiData = createAsyncThunk(
   REQUEST_POST_RESULT,
-  async () => postResults()
+  async (answers: ChatBotAnswer[]) => postResults(answers)
 )
 
 export const AppReducer = createSlice({

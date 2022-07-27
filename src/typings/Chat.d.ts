@@ -1,3 +1,5 @@
+import { ChatBotAnswer } from '../logic/ChatBotData'
+
 export interface ChatUser {
   name: string
   img?: string
@@ -5,6 +7,7 @@ export interface ChatUser {
 }
 
 export type AnswerClickCb = (updatedMessages: ChatMessage[]) => void
+export type FinishCb = (answers: ChatBotAnswer[]) => void
 
 export interface ChatMessageButton {
   text: string

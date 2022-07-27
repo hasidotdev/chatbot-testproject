@@ -1,4 +1,4 @@
-import { ChatBotStepData } from './ChatBotData'
+import { ChatBotStepData, ChatBotValueOption } from './ChatBotData'
 
 export class ChatBotStep {
   private data: ChatBotStepData
@@ -36,12 +36,16 @@ export class ChatBotStep {
     return this.data.valueOptions
   }
 
-  public getAnswerTextById(answerId: number) {
+  public getAnswerById(answerId: number): ChatBotValueOption {
     const answer = this.data.valueOptions[answerId]
     if (!answer) {
       throw new Error('Invalid Answer ID')
     }
-    return this.data.valueOptions[answerId].text
+    return answer
+  }
+
+  public getAnswerTextById(answerId: number) {
+    return this.getAnswerById(answerId).text
   }
 
   public get answerUiType() {

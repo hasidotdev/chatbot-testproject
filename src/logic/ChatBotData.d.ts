@@ -5,6 +5,12 @@ export interface ChatBotValueOption {
   value: string | number | boolean
   text: string
 }
+
+export interface ChatBotAnswer {
+  name: string
+  value: string | number | boolean
+}
+
 export interface ChatBotStepData {
   id: number
   name: string

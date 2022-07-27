@@ -7,6 +7,7 @@ import {
   STR_RESULT_SEND_PENDING,
 } from '../../constants/strings'
 import { ChatBot } from '../../logic/ChatBot'
+import { ChatBotAnswer } from '../../logic/ChatBotData'
 import { AppDispatch, RootState } from '../../store'
 import { actionPostApiData } from '../../store/reducers/app'
 import { ChatMessage, ChatUser } from '../../typings/Chat'
@@ -39,11 +40,15 @@ const Chat = () => {
   }, [])
 
   const dispatch = useDispatch<AppDispatch>()
-  const onFinished = useCallback(() => {
-    console.log('Finished')
-    setShowResultApiStatus(true)
-    dispatch(actionPostApiData())
-  }, [dispatch])
+  const onFinished = useCallback(
+    (answers: ChatBotAnswer[]) => {
+      console.log('Finished')
+
+      setShowResultApiStatus(true)
+      dispatch(actionPostApiData(answers))
+    },
+    [dispatch]
+  )
 
   useEffect(() => {
     if (!chatBot && chatBotData) {

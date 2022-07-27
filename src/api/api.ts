@@ -1,5 +1,5 @@
 import { FLOW_URL } from '../constants/api'
-import { ChatBotData } from '../logic/ChatBotData'
+import { ChatBotAnswer, ChatBotData } from '../logic/ChatBotData'
 import { DefaultApi } from './generatedApi'
 
 export type FetchStatus = false | 'pending' | 'success' | 'error'
@@ -10,16 +10,13 @@ export const fetchChatbotData = async (): Promise<ChatBotData> => {
   return result
 }
 
-export const postResults = async (): Promise<boolean> => {
+export const postResults = async (
+  answers: ChatBotAnswer[]
+): Promise<boolean> => {
   const api = new DefaultApi()
 
   try {
-    const res = await api.postConversation([
-      {
-        name: 'awefawef',
-        value: 'z',
-      },
-    ])
+    const res = await api.postConversation(answers)
     if (res.status < 400) {
       return true
     }
