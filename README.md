@@ -7,7 +7,7 @@ A simple chatbot created in React
 ## Focus & Stack
 
 - The app was set up using `create-react-app` since the main focus was to provide nice React-Code.
-- Testing was left out. Some JEST tests especially on the `ChatBot` class might be nice.
+- Automated testing was left out for now. Some JEST tests especially on the `ChatBot` class might be nice.
 - For Linting ESLint with some common set of rules was used.
 - Prettier is used for formatting
 - The `flow.json` file is stored in the repo (see [here](/public/flow.json)). It is fetched during runtime
