@@ -5,7 +5,7 @@ interface Props {
   children: React.ReactNode
 }
 
-export const chatbotTheme = createTheme({
+const chatbotTheme = createTheme({
   palette: {
     primary: {
       main: '#2167ae',

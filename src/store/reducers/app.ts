@@ -28,7 +28,7 @@ export const actionPostApiData = createAsyncThunk(
   async (answers: ChatBotAnswer[]) => postResults(answers)
 )
 
-export const AppReducer = createSlice({
+const AppReducer = createSlice({
   name: 'app',
   initialState,
   reducers: {
@@ -60,5 +60,5 @@ export const AppReducer = createSlice({
   },
 })
 
-export const { init } = AppReducer.actions
+// export const { init } = AppReducer.actions
 export default AppReducer.reducer

@@ -9,7 +9,7 @@ export interface ChatUser {
 export type AnswerClickCb = (updatedMessages: ChatMessage[]) => void
 export type FinishCb = (answers: ChatBotAnswer[]) => void
 
-export interface ChatMessageButton {
+interface ChatMessageButton {
   text: string
   onClick: () => void
 }

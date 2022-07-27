@@ -1,4 +1,4 @@
-export type ChatBotValueType = 'number' | 'string' | 'boolean'
+type ChatBotValueType = 'number' | 'string' | 'boolean'
 
 export interface ChatBotValueOption {
   nextId: number | false
